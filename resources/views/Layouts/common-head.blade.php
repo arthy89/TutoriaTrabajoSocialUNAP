@@ -23,3 +23,26 @@
 <link rel="stylesheet" href="{{ asset('assets/plugins/daterangepicker/daterangepicker.css') }}">
 <!-- summernote -->
 <link rel="stylesheet" href="{{ asset('assets/plugins/summernote/summernote-bs4.min.css') }}">
+<!-- Notificaciones Lobibox -->
+<link rel="stylesheet" href="{{ asset('assets/notify/css/Lobibox.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/notify/css/notifications.css') }}">
+
+<style>
+    .circle-mask {
+        width: 60px;
+        /* Ajusta el ancho deseado */
+        height: 60px;
+        /* Ajusta la altura deseada */
+        border-radius: 50%;
+        overflow: hidden;
+        display: inline-block;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23) !important;
+    }
+
+    .circle-mask img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23) !important;
+    }
+</style>
