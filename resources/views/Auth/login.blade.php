@@ -15,6 +15,15 @@
     <link rel="stylesheet" href="assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
+    <!-- Notificaciones Lobibox -->
+    <link rel="stylesheet" href="{{ asset('assets/notify/css/Lobibox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/notify/css/notifications.css') }}">
+
+    <style>
+        .ojo_d {
+            background-color: white;
+        }
+    </style>
 </head>
 
 <body class="hold-transition login-page">
@@ -22,59 +31,53 @@
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="#" class="h1"><b>Tutoría</b> Trabajo Social</a>
+                <a href="#" class="h1"><b><i class="fas fa-users"></i> Tutoría</b> Trabajo Social</a>
             </div>
             <div class="card-body">
 
-                <form action="#" method="post">
+                <form action="{{ route('login') }}" method="POST">
+                    @csrf
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="DNI">
+                        <input type="text" class="form-control" placeholder="DNI" name="dni"
+                            onkeypress="validate(event)" required inputmode="numeric" maxlength="8">
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                                <span class="fas fa-id-card"></span>
                             </div>
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Password">
+                        <input type="password" id="contra" required class="form-control" placeholder="Contraseña"
+                            name="password">
                         <div class="input-group-append">
+                            <div class="input-group-text" style="background-color: white;">
+                                <span class="fas fa-eye" id="ojo"></span>
+                            </div>
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-12 col-md-6">
                             <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
+                                <input type="checkbox" id="remember" name="remember">
                                 <label for="remember">
-                                    Remember Me
+                                    Recuérdame
                                 </label>
                             </div>
                         </div>
                         <!-- /.col -->
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        <div class="col-12 col-md-6">
+                            <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
                         </div>
                         <!-- /.col -->
                     </div>
                 </form>
-
-                <div class="social-auth-links text-center mt-2 mb-3">
-                    <a href="#" class="btn btn-block btn-primary">
-                        <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-                    </a>
-                    <a href="#" class="btn btn-block btn-danger">
-                        <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
-                    </a>
-                </div>
-                <!-- /.social-auth-links -->
-
-                <p class="mb-1">
-                    <a href="forgot-password.html">I forgot my password</a>
-                </p>
-                <p class="mb-0">
-                    <a href="register.html" class="text-center">Register a new membership</a>
+            </div>
+            <div class="card-footer text-center">
+                <p class="mb-0 mt-1 text-secondary text-sm">
+                    Si olvidó su contraseña, contactar al Coordinador
                 </p>
             </div>
             <!-- /.card-body -->
@@ -89,6 +92,70 @@
     <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="assets/dist/js/adminlte.min.js"></script>
+    <!-- Notificaciones Lobibox -->
+    <script src="{{ asset('assets/notify/js/Lobibox.js') }}"></script>
+    <script src="{{ asset('assets/notify/js/notification-active.js') }}"></script>
+
+    <script>
+        var ojo_ico = document.getElementById('ojo');
+        var input = document.getElementById('contra');
+
+        ojo_ico.addEventListener("click", function() {
+            if (input.type == "password") {
+                input.type = "text";
+                ojo_ico.classList.remove("fa-eye");
+                ojo_ico.classList.add("fa-eye-slash");
+            } else {
+                input.type = "password";
+                ojo_ico.classList.remove("fa-eye-slash");
+                ojo_ico.classList.add("fa-eye");
+            }
+        })
+    </script>
+
+    <script>
+        function validate(evt) {
+            var theEvent = evt || window.event;
+
+            // Handle paste
+            if (theEvent.type === 'paste') {
+                key = event.clipboardData.getData('text/plain');
+            } else {
+                // Handle key press
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+            }
+            var regex = /[0-9]|\./;
+            if (!regex.test(key)) {
+                theEvent.returnValue = false;
+                if (theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+    </script>
+
+    @if (session('status'))
+        <script>
+            Lobibox.notify('success', {
+                width: 400,
+                img: "{{ asset('imgs/success.png') }}",
+                position: 'top right',
+                title: "Cierre de sesión correcto",
+                msg: '{{ session('status') }} Vuelva pronto'
+            });
+        </script>
+    @endif
+
+    @if ($errors->has('dni'))
+        <script>
+            Lobibox.notify('error', {
+                width: 400,
+                img: "{{ asset('imgs/error.png') }}",
+                position: 'top right',
+                title: "Error de sesión",
+                msg: '¡Error de inicio de sesión, credenciales incorrectas!'
+            });
+        </script>
+    @endif
 </body>
 
 </html>

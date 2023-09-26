@@ -32,3 +32,6 @@
 <script src="{{ asset('assets/dist/js/demo.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 {{-- <script src="assets/dist/js/pages/dashboard.js"></script> --}}
+<!-- Notificaciones Lobibox -->
+<script src="{{ asset('assets/notify/js/Lobibox.js') }}"></script>
+<script src="{{ asset('assets/notify/js/notification-active.js') }}"></script>

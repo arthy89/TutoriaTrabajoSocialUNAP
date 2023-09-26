@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head>
-    {{-- if livewire --}}
+    @livewireStyles
 
     @include('Layouts.common-head')
 
@@ -51,11 +51,16 @@
     </div>
     <!-- ./wrapper -->
 
+    <!-- ./MODALES -->
+    <!-- ./Modal LogOut -->
+    @include('Auth.logout-modal')
+
     <!-- REQUIRED SCRIPTS -->
 
     @include('Layouts.common-end')
 
     {{-- livewire --}}
+    @livewireScripts
 
     @stack('js')
 
