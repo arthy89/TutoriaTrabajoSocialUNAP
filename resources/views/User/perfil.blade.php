@@ -190,7 +190,7 @@
 
                         <h3>Cambiar contraseña</h3>
 
-                        <small class="text-secondary">
+                        <small class="">
                             <ul>
                                 <li>
                                     Inicialmente su contraseña es su código de estudiante.
@@ -288,9 +288,9 @@
                     <div class="card-body">
 
                         <h3>Foto de perfil</h3>
-                        <small class="text-secondary">
+                        <small>
                             Preferentemente suba una imagen cuadrada que tenga la misma medida de
-                            alto y ancho. La foto no debe pesar más de 4MB
+                            alto y ancho. La foto no debe pesar más de <code>4MB</code>.
                         </small>
 
                         @error('foto')

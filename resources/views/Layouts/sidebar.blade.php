@@ -143,7 +143,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('fichapersonal') }}" class="nav-link">
                         <i class="nav-icon far fa-id-card"></i>
                         <p>
                             Ficha Personal

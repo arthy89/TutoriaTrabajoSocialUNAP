@@ -45,4 +45,9 @@
         height: 100%;
         box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23) !important;
     }
+
+    .dark-mode .input-container_1 {
+        color: white;
+        /* Cambia el color del texto a blanco para modo oscuro */
+    }
 </style>

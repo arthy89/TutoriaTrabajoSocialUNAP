@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Periodo;
 use App\Models\Rol;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -101,6 +102,27 @@ class DatabaseSeeder extends Seeder
             'apell' => 'VELASQUEZ LAQUISE',
             'password' => Hash::make('123123'),
             'id_rol' => 3,
+        ]);
+
+        // PERIODOS
+        Periodo::factory()->create([
+            'year' => 2022,
+            'ciclo_anual' => 'I',
+        ]);
+
+        Periodo::factory()->create([
+            'year' => 2022,
+            'ciclo_anual' => 'II',
+        ]);
+
+        Periodo::factory()->create([
+            'year' => 2023,
+            'ciclo_anual' => 'I',
+        ]);
+
+        Periodo::factory()->create([
+            'year' => 2023,
+            'ciclo_anual' => 'II',
         ]);
     }
 }
