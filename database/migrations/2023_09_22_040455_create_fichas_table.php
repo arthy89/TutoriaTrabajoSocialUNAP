@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('fichas', function (Blueprint $table) {
             $table->id('id_ficha');
-            $table->unsignedBigInteger('user')->nullable();
+            $table->unsignedBigInteger('user');
             $table->foreign('user')->references('id')->on('users');
             $table->longText('familia');
             // llenar de campos que necesiten las fichas de informacion

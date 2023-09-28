@@ -35,3 +35,5 @@
 <!-- Notificaciones Lobibox -->
 <script src="{{ asset('assets/notify/js/Lobibox.js') }}"></script>
 <script src="{{ asset('assets/notify/js/notification-active.js') }}"></script>
+
+<script src={{ asset('assets/darkmode/darkmode.js') }}></script>
