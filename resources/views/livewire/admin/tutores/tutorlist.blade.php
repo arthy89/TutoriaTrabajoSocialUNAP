@@ -1,10 +1,15 @@
 <div>
     <div class="card card-outline card-primary">
         <div class="card-header">
-            <h4><strong>Lista de tutores</strong></h4>
+            <h4 class="mb-0"><strong>Lista de tutores</strong></h4>
         </div>
         <div class="card-body">
             <div class="row">
+                <div class="col-12 col-md-6">
+                    <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#tutorcrear">
+                        <i class="fas fa-user-tie"></i> <i class="fas fa-plus"></i> Agregar nuevo Tutor
+                    </button>
+                </div>
                 <div class="col-12 col-md-6">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -26,6 +31,9 @@
                                 <th scope="col" class="align-middle" width="100px">
                                     Foto
                                 </th>
+                                <th scope="col" class="align-middle" width="100px">
+                                    DNI
+                                </th>
                                 <th class="align-middle" width="500px">
                                     Apellidos y nombres
                                 </th>
@@ -33,7 +41,7 @@
                                     Tutorados asignados
                                 </th>
                                 <th scope="col" class="align-middle">
-                                    Estado
+                                    Acciones
                                 </th>
                             </tr>
                         </thead>
@@ -53,25 +61,37 @@
                                             src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2080&amp;q=80"
                                             alt="" width="70px" height="70">
                                     </td>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        {{ $tutor->dni }}
+                                    </td>
                                     <td style="vertical-align: middle;">
                                         {{ $tutor->apell }} {{ $tutor->name }}
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <a href="#" class="btn btn-outline-primary">
+                                        <a href="#" class="btn btn-outline-info">
                                             <strong>20</strong>
                                         </a>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        @if ($tutor->estado == 0)
-                                            <button type="button" class="btn btn-danger">
-                                                <strong><i class="fas fa-lock"></i> Deshabilitado</strong>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-warning" data-toggle="modal"
+                                                data-target="#tutoreditar{{ $tutor->id }}">
+                                                <i class="fas fa-user-edit"></i>
                                             </button>
-                                        @elseif ($tutor->estado == 1)
-                                            <button type="button" class="btn btn-success">
-                                                <strong><i class="fas fa-check-circle"></i> Habilitado</strong>
+                                            @if ($tutor->estado == 0)
+                                                <button type="button" class="btn btn-danger">
+                                                    <i class="fas fa-lock"></i>
+                                                </button>
+                                            @elseif ($tutor->estado == 1)
+                                                <button type="button" class="btn btn-success">
+                                                    <i class="fas fa-check-circle"></i>
+                                                </button>
+                                            @endif
+                                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                data-target="#tutorliminar{{ $tutor->id }}">
+                                                <i class="fas fa-trash-alt"></i>
                                             </button>
-                                        @endif
-
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -82,62 +102,105 @@
         </div>
 
         <div class="card-footer clearfix">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-end  mb-0">
-                    <!-- Botón "Anterior" -->
-                    <li class="page-item {{ $tutores->previousPageUrl() ? '' : 'disabled' }}">
-                        <a class="page-link cursor-pointer" wire:click="previousPage" tabindex="-1">
-                            Anterior
-                        </a>
+            <ul class="pagination pagination m-0 float-right">
+                <!-- Botón "Anterior" -->
+                <li class="page-item {{ $tutores->currentPage() == 1 ? 'disabled' : '' }}">
+                    <a class="page-link" wire:click="previousPage" aria-label="Anterior">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                </li>
+
+                <!-- Mostrar número 1 -->
+                <li class="page-item {{ $tutores->currentPage() == 1 ? 'active' : '' }}">
+                    <a class="page-link" wire:click="gotoPage(1)">1</a>
+                </li>
+
+                <!-- Mostrar '...' antes de la página actual si no está en las primeras páginas -->
+                @if ($tutores->currentPage() > 2)
+                    <li class="page-item">
+                        <span class="page-link">...</span>
                     </li>
+                @endif
 
-                    <!-- Números de página -->
-                    @php
-                        $start = max(1, $tutores->currentPage() - 2);
-                        $end = min($start + 4, $tutores->lastPage());
-                    @endphp
-
-                    <!-- Mostrar número 1 -->
-                    @if ($start > 1)
-                        <li class="page-item">
-                            <a class="page-link cursor-pointer" wire:click="gotoPage(1)">1</a>
-                        </li>
-                        @if ($start > 2)
-                            <li class="page-item disabled">
-                                <a class="page-link">...</a>
-                            </li>
-                        @endif
-                    @endif
-
-                    <!-- Mostrar números de página -->
-                    @for ($page = $start; $page <= $end; $page++)
-                        <li class="page-item {{ $page == $tutores->currentPage() ? 'active' : '' }}">
-                            <a class="page-link cursor-pointer"
-                                wire:click="gotoPage({{ $page }})">{{ $page }}</a>
-                        </li>
-                    @endfor
-
-                    <!-- Mostrar última página -->
-                    @if ($end < $tutores->lastPage())
-                        @if ($end < $tutores->lastPage() - 1)
-                            <li class="page-item disabled">
-                                <a class="page-link">...</a>
-                            </li>
-                        @endif
-                        <li class="page-item">
-                            <a class="page-link cursor-pointer"
-                                wire:click="gotoPage({{ $tutores->lastPage() }})">{{ $tutores->lastPage() }}</a>
-                        </li>
-                    @endif
-
-                    <!-- Botón "Siguiente" -->
-                    <li class="page-item {{ $tutores->nextPageUrl() ? '' : 'disabled' }}">
-                        <a class="page-link cursor-pointer" wire:click="nextPage">
-                            Siguiente
-                        </a>
+                <!-- Mostrar página actual -->
+                @if ($tutores->currentPage() > 1 && $tutores->currentPage() < $tutores->lastPage())
+                    <li class="page-item active">
+                        <a class="page-link"
+                            wire:click="gotoPage({{ $tutores->currentPage() }})">{{ $tutores->currentPage() }}</a>
                     </li>
-                </ul>
-            </nav>
+                @endif
+
+                <!-- Mostrar '...' después de la página actual si no está en las últimas páginas -->
+                @if ($tutores->currentPage() < $tutores->lastPage() - 1)
+                    <li class="page-item">
+                        <span class="page-link">...</span>
+                    </li>
+                @endif
+
+                <!-- Mostrar última página -->
+                <li class="page-item {{ $tutores->currentPage() == $tutores->lastPage() ? 'active' : '' }}">
+                    <a class="page-link"
+                        wire:click="gotoPage({{ $tutores->lastPage() }})">{{ $tutores->lastPage() }}</a>
+                </li>
+
+                <!-- Botón "Siguiente" -->
+                <li class="page-item {{ $tutores->currentPage() == $tutores->lastPage() ? 'disabled' : '' }}">
+                    <a class="page-link" wire:click="nextPage" aria-label="Siguiente">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
+            </ul>
         </div>
+
     </div>
+
+    {{-- ? Modales Editar/Eliminar --}}
+    @foreach ($tutores as $tutor)
+        @livewire('admin.tutores.tutoreditar', ['tutor' => $tutor], key('editar' . $tutor->id))
+        @livewire('admin.tutores.tutoreliminar', ['tutor' => $tutor], key('eliminar' . $tutor->id))
+    @endforeach
+
+    @push('js')
+        <script>
+            document.addEventListener('livewire:load', function() {
+                Livewire.on('tutorCreado', function() {
+                    Lobibox.notify('success', {
+                        width: 400,
+                        img: "{{ asset('imgs/success.png') }}",
+                        position: 'top right',
+                        title: "Tutor creado",
+                        msg: 'El tutor se registró correctamente'
+                    });
+                });
+            });
+        </script>
+
+        <script>
+            document.addEventListener('livewire:load', function() {
+                Livewire.on('tutorEliminado', function() {
+                    Lobibox.notify('success', {
+                        width: 400,
+                        img: "{{ asset('imgs/success.png') }}",
+                        position: 'top right',
+                        title: "Tutor eliminado",
+                        msg: 'El tutor fue eliminado del sistema'
+                    });
+                });
+            });
+        </script>
+
+        <script>
+            document.addEventListener('livewire:load', function() {
+                Livewire.on('tutorActualizado', function() {
+                    Lobibox.notify('info', {
+                        width: 400,
+                        img: "{{ asset('imgs/success.png') }}",
+                        position: 'top right',
+                        title: "Tutor actualizado",
+                        msg: 'El tutor fue actualizado correctamente'
+                    });
+                });
+            });
+        </script>
+    @endpush
 </div>

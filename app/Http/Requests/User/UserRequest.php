@@ -23,8 +23,8 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'apell' => 'required',
-            'name' => 'required',
+            // 'apell' => 'required',
+            // 'name' => 'required',
             'sexo' => 'required',
             'email' => [
                 'required', 'email',

@@ -25,7 +25,7 @@ class Tutorlist extends Component
             })
             ->orderBy('apell', 'ASC')
             ->orderBy('name', 'ASC')
-            ->paginate(2);
+            ->paginate(5);
 
         // Agregar el número de fila a cada estudiante
         $tutores->each(function ($tutore, $index) use ($tutores) {

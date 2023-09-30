@@ -39,14 +39,15 @@ class UserController extends Controller
 
     public function perfilact(UserRequest $request, User $user)
     {
+        return $request;
         // validamos que no se actualice en un registro diferente, control de seguridad
         if ($user->id != auth()->user()->id) {
             return redirect()->back()->with('errorFormCorrupto', 'Error de formulario, datos incorrectos');
         }
 
         $user->update([
-            'apell' => strtoupper($request->apell),
-            'name' => strtoupper($request->name),
+            // 'apell' => strtoupper($request->apell),
+            // 'name' => strtoupper($request->name),
             'sexo' => $request->sexo,
             'email' => strtolower($request->email),
             'celular' => $request->celular,

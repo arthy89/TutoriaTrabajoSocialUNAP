@@ -10,4 +10,7 @@
             @livewire('admin.estudiantes.estlist')
         </div>
     </div>
+
+    {{-- ! Modales --}}
+    @livewire('admin.estudiantes.estcrear')
 @endsection
