@@ -10,4 +10,7 @@
             @livewire('admin.tutores.tutorlist')
         </div>
     </div>
+
+    {{-- ! Modales --}}
+    @livewire('admin.tutores.tutorcrear')
 @endsection

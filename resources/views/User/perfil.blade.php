@@ -76,32 +76,34 @@
                         <h3>Datos Generales</h3>
 
                         <div class="row">
-                            <div class="form-group">
-                                <label for="dni">DNI</label>
-                                <input type="text" class="form-control" id="dni" disabled
-                                    value="{{ Auth::user()->dni }}">
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="dni">DNI</label>
+                                    <input type="text" class="form-control" id="dni" disabled
+                                        value="{{ Auth::user()->dni }}">
+                                </div>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="apell">Apellidos <code>*</code></label>
-                                    <input type="text" class="form-control form-control-border text-uppercase"
-                                        id="apell" name="apell" value="{{ old('apell', Auth::user()->apell) }}">
-                                    @if ($errors->has('apell'))
+                                    <label for="apell">Apellidos</label>
+                                    <input type="text" class="form-control text-uppercase" disabled id="apell"
+                                        value="{{ old('apell', Auth::user()->apell) }}">
+                                    {{-- @if ($errors->has('apell'))
                                         <small class="text-danger">Los <strong>Apellidos</strong> son requeridos</small>
-                                    @endif
+                                    @endif --}}
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Nombres <code>*</code></label>
-                                    <input type="text" class="form-control form-control-border text-uppercase"
-                                        id="name" name="name" value="{{ old('name', Auth::user()->name) }}">
-                                    @if ($errors->has('name'))
+                                    <label for="name">Nombres</label>
+                                    <input type="text" class="form-control text-uppercase" disabled id="name"
+                                        value="{{ old('name', Auth::user()->name) }}">
+                                    {{-- @if ($errors->has('name'))
                                         <small class="text-danger">Los <strong>Nombres</strong> son requeridos</small>
-                                    @endif
+                                    @endif --}}
                                 </div>
                             </div>
                         </div>
@@ -338,27 +340,6 @@
 @endsection
 
 @push('js')
-    {{-- validador de numeros --}}
-    <script>
-        function validate(evt) {
-            var theEvent = evt || window.event;
-
-            // Handle paste
-            if (theEvent.type === 'paste') {
-                key = event.clipboardData.getData('text/plain');
-            } else {
-                // Handle key press
-                var key = theEvent.keyCode || theEvent.which;
-                key = String.fromCharCode(key);
-            }
-            var regex = /[0-9]|\./;
-            if (!regex.test(key)) {
-                theEvent.returnValue = false;
-                if (theEvent.preventDefault) theEvent.preventDefault();
-            }
-        }
-    </script>
-
     {{-- muestra de imagen cargada --}}
     <script>
         function mostrarImagen(event) {
@@ -499,7 +480,7 @@
         });
     </script>
 
-    @if ($errors->has('apell'))
+    {{-- @if ($errors->has('apell'))
         <script>
             Lobibox.notify('error', {
                 width: 400,
@@ -521,7 +502,7 @@
                 msg: 'Los nombres son requeridos'
             });
         </script>
-    @endif
+    @endif --}}
 
     @if ($errors->has('sexo'))
         <script>

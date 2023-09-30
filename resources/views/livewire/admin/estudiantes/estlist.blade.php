@@ -6,6 +6,11 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-12 col-md-6">
+                    <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#estcrear">
+                        <i class="fas fa-user"></i> <i class="fas fa-plus"></i> Agregar nuevo Estudiante
+                    </button>
+                </div>
+                <div class="col-12 col-md-6">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-search"></i></span>
@@ -25,6 +30,9 @@
                                 </th>
                                 <th scope="col" class="align-middle" width="100px">
                                     Foto
+                                </th>
+                                <th scope="col" class="align-middle" width="100px">
+                                    Código
                                 </th>
                                 <th class="align-middle" width="500px">
                                     Apellidos y nombres
@@ -52,6 +60,9 @@
                                         <img class="img-circle img-bordered-sm"
                                             src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2080&amp;q=80"
                                             alt="" width="70px" height="70">
+                                    </td>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        {{ $est->dni }}
                                     </td>
                                     <td style="vertical-align: middle;">
                                         {{ $est->apell }} {{ $est->name }}
@@ -82,62 +93,54 @@
         </div>
 
         <div class="card-footer clearfix">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-end  mb-0">
-                    <!-- Botón "Anterior" -->
-                    <li class="page-item {{ $estudiantes->previousPageUrl() ? '' : 'disabled' }}">
-                        <a class="page-link cursor-pointer" wire:click="previousPage" tabindex="-1">
-                            Anterior
-                        </a>
+            <ul class="pagination pagination m-0 float-right">
+                <!-- Botón "Anterior" -->
+                <li class="page-item {{ $estudiantes->currentPage() == 1 ? 'disabled' : '' }}">
+                    <a class="page-link" wire:click="previousPage" aria-label="Anterior">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                </li>
+
+                <!-- Mostrar número 1 -->
+                <li class="page-item {{ $estudiantes->currentPage() == 1 ? 'active' : '' }}">
+                    <a class="page-link" wire:click="gotoPage(1)">1</a>
+                </li>
+
+                <!-- Mostrar '...' antes de la página actual si no está en las primeras páginas -->
+                @if ($estudiantes->currentPage() > 2)
+                    <li class="page-item">
+                        <span class="page-link">...</span>
                     </li>
+                @endif
 
-                    <!-- Números de página -->
-                    @php
-                        $start = max(1, $estudiantes->currentPage() - 2);
-                        $end = min($start + 4, $estudiantes->lastPage());
-                    @endphp
-
-                    <!-- Mostrar número 1 -->
-                    @if ($start > 1)
-                        <li class="page-item">
-                            <a class="page-link cursor-pointer" wire:click="gotoPage(1)">1</a>
-                        </li>
-                        @if ($start > 2)
-                            <li class="page-item disabled">
-                                <a class="page-link">...</a>
-                            </li>
-                        @endif
-                    @endif
-
-                    <!-- Mostrar números de página -->
-                    @for ($page = $start; $page <= $end; $page++)
-                        <li class="page-item {{ $page == $estudiantes->currentPage() ? 'active' : '' }}">
-                            <a class="page-link cursor-pointer"
-                                wire:click="gotoPage({{ $page }})">{{ $page }}</a>
-                        </li>
-                    @endfor
-
-                    <!-- Mostrar última página -->
-                    @if ($end < $estudiantes->lastPage())
-                        @if ($end < $estudiantes->lastPage() - 1)
-                            <li class="page-item disabled">
-                                <a class="page-link">...</a>
-                            </li>
-                        @endif
-                        <li class="page-item">
-                            <a class="page-link cursor-pointer"
-                                wire:click="gotoPage({{ $estudiantes->lastPage() }})">{{ $estudiantes->lastPage() }}</a>
-                        </li>
-                    @endif
-
-                    <!-- Botón "Siguiente" -->
-                    <li class="page-item {{ $estudiantes->nextPageUrl() ? '' : 'disabled' }}">
-                        <a class="page-link cursor-pointer" wire:click="nextPage">
-                            Siguiente
-                        </a>
+                <!-- Mostrar página actual -->
+                @if ($estudiantes->currentPage() > 1 && $estudiantes->currentPage() < $estudiantes->lastPage())
+                    <li class="page-item active">
+                        <a class="page-link"
+                            wire:click="gotoPage({{ $estudiantes->currentPage() }})">{{ $estudiantes->currentPage() }}</a>
                     </li>
-                </ul>
-            </nav>
+                @endif
+
+                <!-- Mostrar '...' después de la página actual si no está en las últimas páginas -->
+                @if ($estudiantes->currentPage() < $estudiantes->lastPage() - 1)
+                    <li class="page-item">
+                        <span class="page-link">...</span>
+                    </li>
+                @endif
+
+                <!-- Mostrar última página -->
+                <li class="page-item {{ $estudiantes->currentPage() == $estudiantes->lastPage() ? 'active' : '' }}">
+                    <a class="page-link"
+                        wire:click="gotoPage({{ $estudiantes->lastPage() }})">{{ $estudiantes->lastPage() }}</a>
+                </li>
+
+                <!-- Botón "Siguiente" -->
+                <li class="page-item {{ $estudiantes->currentPage() == $estudiantes->lastPage() ? 'disabled' : '' }}">
+                    <a class="page-link" wire:click="nextPage" aria-label="Siguiente">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

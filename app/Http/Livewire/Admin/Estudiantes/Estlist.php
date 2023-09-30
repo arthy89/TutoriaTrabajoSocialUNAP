@@ -25,7 +25,7 @@ class Estlist extends Component
             })
             ->orderBy('apell', 'ASC')
             ->orderBy('name', 'ASC')
-            ->paginate(2);
+            ->paginate(5);
 
         // Agregar el número de fila a cada estudiante
         $estudiantes->each(function ($estudiante, $index) use ($estudiantes) {
