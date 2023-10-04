@@ -53,13 +53,23 @@
                             @endif
                             @foreach ($tutores as $tutor)
                                 <tr>
-                                    <th class="text-center" style="vertical-align: middle;">
+                                    <th class="text-center align-middle" style="vertical-align: middle;">
                                         {{ $tutor->rowNumber }}
                                     </th>
-                                    <td scope="row" class="text-center">
-                                        <img class="img-circle img-bordered-sm"
-                                            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2080&amp;q=80"
-                                            alt="" width="70px" height="70">
+                                    <td scope="row" class="text-center align-middle">
+                                        @if ($tutor->foto)
+                                            <div class="circle-mask">
+                                                <img class="img-circle img-bordered-sm"
+                                                    src="{{ asset('storage/' . $tutor->foto) }}" alt=""
+                                                    width="70px" height="70">
+                                            </div>
+                                        @else
+                                            <div class="circle-mask">
+                                                <img class="img-circle img-bordered-sm"
+                                                    src="{{ asset('imgs/user-default.jpg') }}" alt=""
+                                                    width="70px" height="70">
+                                            </div>
+                                        @endif
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
                                         {{ $tutor->dni }}
@@ -68,8 +78,8 @@
                                         {{ $tutor->apell }} {{ $tutor->name }}
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <a href="#" class="btn btn-outline-info">
-                                            <strong>20</strong>
+                                        <a href="{{ route('tutor', $tutor->dni) }}" class="btn btn-outline-info">
+                                            <strong>{{ $tutor->tutoradosAsignados }}</strong>
                                         </a>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
@@ -79,11 +89,13 @@
                                                 <i class="fas fa-user-edit"></i>
                                             </button>
                                             @if ($tutor->estado == 0)
-                                                <button type="button" class="btn btn-danger">
+                                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                    data-target="#tutorestado{{ $tutor->id }}">
                                                     <i class="fas fa-lock"></i>
                                                 </button>
                                             @elseif ($tutor->estado == 1)
-                                                <button type="button" class="btn btn-success">
+                                                <button type="button" class="btn btn-success" data-toggle="modal"
+                                                    data-target="#tutorestado{{ $tutor->id }}">
                                                     <i class="fas fa-check-circle"></i>
                                                 </button>
                                             @endif
@@ -158,6 +170,7 @@
     @foreach ($tutores as $tutor)
         @livewire('admin.tutores.tutoreditar', ['tutor' => $tutor], key('editar' . $tutor->id))
         @livewire('admin.tutores.tutoreliminar', ['tutor' => $tutor], key('eliminar' . $tutor->id))
+        @livewire('admin.tutores.tutorestado', ['tutor' => $tutor], key('estado' . $tutor->id))
     @endforeach
 
     @push('js')
@@ -198,6 +211,34 @@
                         position: 'top right',
                         title: "Tutor actualizado",
                         msg: 'El tutor fue actualizado correctamente'
+                    });
+                });
+            });
+        </script>
+
+        <script>
+            document.addEventListener('livewire:load', function() {
+                Livewire.on('tutorDeshabilitado', function() {
+                    Lobibox.notify('info', {
+                        width: 400,
+                        img: "{{ asset('imgs/warning.png') }}",
+                        position: 'top right',
+                        title: "Tutor deshabilitado",
+                        msg: 'El tutor fue deshabilitado'
+                    });
+                });
+            });
+        </script>
+
+        <script>
+            document.addEventListener('livewire:load', function() {
+                Livewire.on('tutorHabilitado', function() {
+                    Lobibox.notify('success', {
+                        width: 400,
+                        img: "{{ asset('imgs/success.png') }}",
+                        position: 'top right',
+                        title: "Tutor habilitado",
+                        msg: 'El tutor fue habilitado'
                     });
                 });
             });

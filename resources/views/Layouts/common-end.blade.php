@@ -36,7 +36,11 @@
 <script src="{{ asset('assets/notify/js/Lobibox.js') }}"></script>
 <script src="{{ asset('assets/notify/js/notification-active.js') }}"></script>
 
+<!-- Dark Mode -->
 <script src={{ asset('assets/darkmode/darkmode.js') }}></script>
+<!-- Select2 -->
+{{-- <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script> --}}
+<script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
 
 {{-- validador de numeros --}}
 <script>

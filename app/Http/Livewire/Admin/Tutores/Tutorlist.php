@@ -21,15 +21,18 @@ class Tutorlist extends Component
         $tutores = User::where('id_rol', 2)
             ->where(function ($query) {
                 $query->where('name', 'LIKE', '%' . $this->search . '%')
-                    ->orWhere('apell', 'LIKE', '%' . $this->search . '%');
+                    ->orWhere('apell', 'LIKE', '%' . $this->search . '%')
+                    ->orWhere('dni', 'LIKE', '%' . $this->search . '%');
             })
             ->orderBy('apell', 'ASC')
             ->orderBy('name', 'ASC')
+            ->withCount('tutorados')
             ->paginate(5);
 
         // Agregar el número de fila a cada estudiante
-        $tutores->each(function ($tutore, $index) use ($tutores) {
-            $tutore->rowNumber = $tutores->firstItem() + $index;
+        $tutores->each(function ($tutor, $index) use ($tutores) {
+            $tutor->rowNumber = $tutores->firstItem() + $index;
+            $tutor->tutoradosAsignados = $tutor->tutorados_count;
         });
 
         // dd($tutores);

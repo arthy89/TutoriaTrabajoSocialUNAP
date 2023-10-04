@@ -145,6 +145,18 @@
         </script>
     @endif
 
+    @if (session('deshabilitado'))
+        <script>
+            Lobibox.notify('error', {
+                width: 400,
+                img: "{{ asset('imgs/error.png') }}",
+                position: 'top right',
+                title: "¡Error de sesión!",
+                msg: '{{ session('deshabilitado') }}'
+            });
+        </script>
+    @endif
+
     @if ($errors->has('dni'))
         <script>
             Lobibox.notify('error', {

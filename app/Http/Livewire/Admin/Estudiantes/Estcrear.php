@@ -29,7 +29,7 @@ class Estcrear extends Component
         return [
             'user.dni.required' => 'El Código es requerido',
             'user.dni.unique' => 'Este Código ya está registrado',
-            'user.dni.min' => 'El Código debe tener mínimo 8 dígitos',
+            'user.dni.min' => 'El Código debe tener mínimo 6 dígitos',
             'user.apell.required' => 'Los Apellidos son requeridos',
             'user.name.required' => 'Los Nombres son requeridos',
         ];
