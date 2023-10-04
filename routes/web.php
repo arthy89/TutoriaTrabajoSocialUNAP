@@ -21,6 +21,8 @@ Route::put('perfilpass', [UserController::class, 'perfilpass'])->name('perfilpas
 Route::put('perfilact/{user}', [UserController::class, 'perfilact'])->name('perfilact');
 
 // VISTAS ADMIN
+Route::get('tutor/{dni}', [AdminController::class, 'tutor'])->name('tutor');
+Route::post('tutor/addest', [AdminController::class, 'tutoraddest'])->name('tutoraddest');
 Route::get('tutores', [AdminController::class, 'tutores'])->name('tutores');
 Route::get('estudiantes', [AdminController::class, 'estudiantes'])->name('estudiantes');
 
