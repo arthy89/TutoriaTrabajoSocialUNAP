@@ -91,3 +91,18 @@
         /* Muestra puntos suspensivos (...) si el texto no cabe */
     }
 </style>
+
+<style>
+    @media (max-width: 576px) {
+        .pagination {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 10px 0;
+        }
+
+        .pagination li {
+            margin: 0 5px;
+        }
+    }
+</style>

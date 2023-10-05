@@ -114,53 +114,37 @@
         </div>
 
         <div class="card-footer clearfix">
-            <ul class="pagination pagination m-0 float-right">
-                <!-- Botón "Anterior" -->
-                <li class="page-item {{ $tutores->currentPage() == 1 ? 'disabled' : '' }}">
-                    <a class="page-link" wire:click="previousPage" aria-label="Anterior">
-                        <i class="fas fa-chevron-left"></i>
-                    </a>
-                </li>
-
-                <!-- Mostrar número 1 -->
-                <li class="page-item {{ $tutores->currentPage() == 1 ? 'active' : '' }}">
-                    <a class="page-link" wire:click="gotoPage(1)">1</a>
-                </li>
-
-                <!-- Mostrar '...' antes de la página actual si no está en las primeras páginas -->
-                @if ($tutores->currentPage() > 2)
+            <ul class="pagination justify-content-center mb-0 flex-wrap">
+                @if ($tutores->onFirstPage())
+                    <li class="page-item disabled">
+                        <span class="page-link"><i class="fas fa-chevron-left"></i></span>
+                    </li>
+                @else
                     <li class="page-item">
-                        <span class="page-link">...</span>
+                        <a class="page-link" href="#" wire:click="previousPage" rel="prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
                     </li>
                 @endif
 
-                <!-- Mostrar página actual -->
-                @if ($tutores->currentPage() > 1 && $tutores->currentPage() < $tutores->lastPage())
-                    <li class="page-item active">
-                        <a class="page-link"
-                            wire:click="gotoPage({{ $tutores->currentPage() }})">{{ $tutores->currentPage() }}</a>
+                @for ($i = 1; $i <= $tutores->lastPage(); $i++)
+                    <li class="page-item {{ $tutores->currentPage() == $i ? 'active' : '' }}">
+                        <a class="page-link" href="#"
+                            wire:click="gotoPage({{ $i }})">{{ $i }}</a>
                     </li>
-                @endif
+                @endfor
 
-                <!-- Mostrar '...' después de la página actual si no está en las últimas páginas -->
-                @if ($tutores->currentPage() < $tutores->lastPage() - 1)
+                @if ($tutores->hasMorePages())
                     <li class="page-item">
-                        <span class="page-link">...</span>
+                        <a class="page-link" href="#" wire:click="nextPage" rel="next">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>
+                @else
+                    <li class="page-item disabled">
+                        <span class="page-link"><i class="fas fa-chevron-right"></i></span>
                     </li>
                 @endif
-
-                <!-- Mostrar última página -->
-                <li class="page-item {{ $tutores->currentPage() == $tutores->lastPage() ? 'active' : '' }}">
-                    <a class="page-link"
-                        wire:click="gotoPage({{ $tutores->lastPage() }})">{{ $tutores->lastPage() }}</a>
-                </li>
-
-                <!-- Botón "Siguiente" -->
-                <li class="page-item {{ $tutores->currentPage() == $tutores->lastPage() ? 'disabled' : '' }}">
-                    <a class="page-link" wire:click="nextPage" aria-label="Siguiente">
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                </li>
             </ul>
         </div>
 
