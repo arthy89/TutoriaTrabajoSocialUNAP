@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-12">
             <div class="callout callout-info">
-                <h3><Strong>Tutor: </Strong> {{ $tutor->apell }} {{ $tutor->name }}</h3>
+                <h3 class="mb-0"><Strong>Tutor: </Strong> {{ $tutor->apell }} {{ $tutor->name }}</h3>
             </div>
         </div>
         <div class="col-12">

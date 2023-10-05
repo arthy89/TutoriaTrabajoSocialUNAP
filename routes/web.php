@@ -3,7 +3,9 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EstController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TutorController;
 use App\Http\Controllers\UserController;
+use App\Http\Livewire\Tutor\SeguimientosView;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,7 +28,10 @@ Route::post('tutor/addest', [AdminController::class, 'tutoraddest'])->name('tuto
 Route::get('tutores', [AdminController::class, 'tutores'])->name('tutores');
 Route::get('estudiantes', [AdminController::class, 'estudiantes'])->name('estudiantes');
 
+
 // VISTAS TUTOR
+Route::get('estudiantes/seguimientos/{dni}', [TutorController::class, 'seguimientos'])->name('seguimientos');
+// Route::get('estudiantes/seguimientos/{dni}', SeguimientosView::class)->name('seguimientos');
 
 // VISTAR ESTUDIANTE
 Route::get('fichapersonal', [EstController::class, 'fichapersonal'])->name('fichapersonal');

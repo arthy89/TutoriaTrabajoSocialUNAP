@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('seguimientos', function (Blueprint $table) {
             $table->id('id_seg');
-            $table->unsignedBigInteger('user')->nullable();
+            $table->bigInteger('num_seg');
+            $table->unsignedBigInteger('user');
             $table->foreign('user')->references('id')->on('users');
-            $table->boolean('asistencia')->default(false);
-            $table->longText('observaciones')->nullable();
+            // $table->boolean('asistencia')->default(false);
+            $table->string('titulo');
+            $table->longText('observaciones');
             $table->string('tutor');
             $table->timestamps();
         });

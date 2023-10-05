@@ -130,8 +130,8 @@
                                         </select>
                                     </td>
                                     <td class="text-center align-middle">
-                                        <a href="#" class="btn btn-outline-info">
-                                            <strong>30</strong>
+                                        <a href="{{ route('seguimientos', $est->dni) }}" class="btn btn-outline-info">
+                                            <strong>{{ $est->seguimientos->count() }}</strong>
                                         </a>
                                     </td>
                                     <td class="text-center align-middle">
@@ -171,55 +171,40 @@
         </div>
 
         <div class="card-footer clearfix">
-            <ul class="pagination pagination m-0 float-right">
-                <!-- Botón "Anterior" -->
-                <li class="page-item {{ $estudiantes->currentPage() == 1 ? 'disabled' : '' }}">
-                    <a class="page-link" wire:click="previousPage" aria-label="Anterior">
-                        <i class="fas fa-chevron-left"></i>
-                    </a>
-                </li>
-
-                <!-- Mostrar número 1 -->
-                <li class="page-item {{ $estudiantes->currentPage() == 1 ? 'active' : '' }}">
-                    <a class="page-link" wire:click="gotoPage(1)">1</a>
-                </li>
-
-                <!-- Mostrar '...' antes de la página actual si no está en las primeras páginas -->
-                @if ($estudiantes->currentPage() > 2)
+            <ul class="pagination justify-content-center mb-0 flex-wrap">
+                @if ($estudiantes->onFirstPage())
+                    <li class="page-item disabled">
+                        <span class="page-link"><i class="fas fa-chevron-left"></i></span>
+                    </li>
+                @else
                     <li class="page-item">
-                        <span class="page-link">...</span>
+                        <a class="page-link" href="#" wire:click="previousPage" rel="prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
                     </li>
                 @endif
 
-                <!-- Mostrar página actual -->
-                @if ($estudiantes->currentPage() > 1 && $estudiantes->currentPage() < $estudiantes->lastPage())
-                    <li class="page-item active">
-                        <a class="page-link"
-                            wire:click="gotoPage({{ $estudiantes->currentPage() }})">{{ $estudiantes->currentPage() }}</a>
+                @for ($i = 1; $i <= $estudiantes->lastPage(); $i++)
+                    <li class="page-item {{ $estudiantes->currentPage() == $i ? 'active' : '' }}">
+                        <a class="page-link" href="#"
+                            wire:click="gotoPage({{ $i }})">{{ $i }}</a>
                     </li>
-                @endif
+                @endfor
 
-                <!-- Mostrar '...' después de la página actual si no está en las últimas páginas -->
-                @if ($estudiantes->currentPage() < $estudiantes->lastPage() - 1)
+                @if ($estudiantes->hasMorePages())
                     <li class="page-item">
-                        <span class="page-link">...</span>
+                        <a class="page-link" href="#" wire:click="nextPage" rel="next">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>
+                @else
+                    <li class="page-item disabled">
+                        <span class="page-link"><i class="fas fa-chevron-right"></i></span>
                     </li>
                 @endif
-
-                <!-- Mostrar última página -->
-                <li class="page-item {{ $estudiantes->currentPage() == $estudiantes->lastPage() ? 'active' : '' }}">
-                    <a class="page-link"
-                        wire:click="gotoPage({{ $estudiantes->lastPage() }})">{{ $estudiantes->lastPage() }}</a>
-                </li>
-
-                <!-- Botón "Siguiente" -->
-                <li class="page-item {{ $estudiantes->currentPage() == $estudiantes->lastPage() ? 'disabled' : '' }}">
-                    <a class="page-link" wire:click="nextPage" aria-label="Siguiente">
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                </li>
             </ul>
         </div>
+
     </div>
 
     {{-- ? Modales Editar/Eliminar --}}
