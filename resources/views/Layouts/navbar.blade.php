@@ -1,4 +1,4 @@
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<nav class="main-header navbar navbar-expand navbar-dark" id="mainNavbar">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item">
@@ -136,8 +136,19 @@
             </a>
         </li> --}}
 
+        <!-- Modo oscuro/claro switch -->
+
+        <li class="nav-item mx-2">
+            <div class="icheck-primary d-inline">
+                <input class="form-check-input" type="checkbox" id="darkModeSwitch">
+                <label class="form-check-input" for="darkModeSwitch">
+                    <i class="fas fa-moon"></i> Modo oscuro
+                </label>
+            </div>
+        </li>
+
         <li class="nav-item">
-            <a type="button" class="nav-link text-danger" data-toggle="modal" data-target="#logoutModal">
+            <a type="button" class="nav-link bg-danger rounded-lg" data-toggle="modal" data-target="#logoutModal">
                 <i class="fas fa-sign-out-alt"></i> Salir
             </a>
         </li>

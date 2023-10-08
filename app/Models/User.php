@@ -55,4 +55,19 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Rol::class, 'id_rol');
     }
+
+    public function tutorados()
+    {
+        return $this->hasMany(User::class, 'tutor_id');
+    }
+
+    public function seguimientos()
+    {
+        return $this->hasMany(Seguimiento::class, 'user');
+    }
+
+    public function ficha()
+    {
+        return $this->hasMany(Ficha::class, 'user');
+    }
 }

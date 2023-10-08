@@ -12,7 +12,12 @@ class LoginController extends Controller
     {
         $remember = $request->filled('remember');
 
-        if (Auth::attempt($request->only('dni', 'password'), $remember)) {
+        if (Auth::attempt($request->only('dni', 'password'), $remember) && Auth::user()->estado == 0) {
+            Auth::logout();
+            return redirect()->route('login')->with('deshabilitado', '¡Su perfil está deshabilitado!');
+        }
+
+        if (Auth::attempt($request->only('dni', 'password'), $remember) && Auth::user()->estado == 1) {
             $request->session()->regenerate();
 
             return redirect()

@@ -26,6 +26,8 @@
 <!-- Notificaciones Lobibox -->
 <link rel="stylesheet" href="{{ asset('assets/notify/css/Lobibox.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/notify/css/notifications.css') }}">
+<!-- Select2 -->
+<link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
 
 <style>
     .circle-mask {
@@ -44,5 +46,48 @@
         width: 100%;
         height: 100%;
         box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23) !important;
+    }
+
+    /* Estilos para el texto en modo oscuro */
+    .dark-mode .input-container_1 {
+        color: white;
+        /* Cambia el color del texto a blanco para modo oscuro */
+    }
+
+    /* Estilos para el select2 en modo oscuro */
+    .dark-mode .select2-info .select2-selection {
+        color: white;
+        /* Cambia el color del texto a blanco para modo oscuro */
+        background-color: #343a40;
+    }
+
+    .dark-mode .select2-info .select2-selection .select2-selection__choice {
+        color: white;
+        /* Cambia el color de las opciones a blanco para modo oscuro */
+    }
+
+    /* Estilos para la parte del select2 que sigue en blanco */
+    .dark-mode .select2-info .select2-selection.select2-selection--multiple {
+        color: white
+            /* Cambia el color del texto a blanco para modo oscuro */
+        ;
+        background-color: #343a40;
+    }
+
+    .dark-mode .select2-info .select2-selection .select2-search .select2-search__field {
+        color: white;
+    }
+</style>
+
+<style>
+    /* Estilo para el contenido dentro del th */
+    .th-content {
+        width: 200px;
+        white-space: nowrap;
+        /* Evita que el texto se ajuste y se rompa en múltiples líneas */
+        overflow: hidden;
+        /* Oculta cualquier parte del texto que no quepa */
+        text-overflow: ellipsis;
+        /* Muestra puntos suspensivos (...) si el texto no cabe */
     }
 </style>

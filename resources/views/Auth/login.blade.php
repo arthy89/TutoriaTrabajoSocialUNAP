@@ -38,7 +38,7 @@
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="DNI" name="dni"
+                        <input type="text" class="form-control" placeholder="Código de estudiante/DNI" name="dni"
                             onkeypress="validate(event)" required inputmode="numeric" maxlength="8">
                         <div class="input-group-append">
                             <div class="input-group-text">
@@ -141,6 +141,18 @@
                 position: 'top right',
                 title: "Cierre de sesión correcto",
                 msg: '{{ session('status') }} Vuelva pronto'
+            });
+        </script>
+    @endif
+
+    @if (session('deshabilitado'))
+        <script>
+            Lobibox.notify('error', {
+                width: 400,
+                img: "{{ asset('imgs/error.png') }}",
+                position: 'top right',
+                title: "¡Error de sesión!",
+                msg: '{{ session('deshabilitado') }}'
             });
         </script>
     @endif
