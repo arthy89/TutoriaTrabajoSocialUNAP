@@ -127,7 +127,14 @@
                     </li>
                 @endif
 
-                @for ($i = 1; $i <= $tutores->lastPage(); $i++)
+                @php
+                    $showPages = 6; // Número de páginas a mostrar
+                    $half = floor($showPages / 2);
+                    $start = max(1, $tutores->currentPage() - $half);
+                    $end = min($start + $showPages - 1, $tutores->lastPage());
+                @endphp
+
+                @for ($i = $start; $i <= $end; $i++)
                     <li class="page-item {{ $tutores->currentPage() == $i ? 'active' : '' }}">
                         <a class="page-link" href="#"
                             wire:click="gotoPage({{ $i }})">{{ $i }}</a>

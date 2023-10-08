@@ -18,7 +18,7 @@
                             <span class="input-group-text"><i class="fas fa-search"></i></span>
                         </div>
                         <input wire:model="search" type="text" class="form-control"
-                            placeholder="Buscar por nombre...">
+                            placeholder="Buscar por nombre o código...">
                     </div>
                 </div>
             </div>
@@ -45,20 +45,24 @@
                                 <th class="align-middle" width="100px">
                                     Ficha
                                 </th>
-                                <th scope="col" class="align-middle" width="300px">
-                                    <div class="th-content">
-                                        Tutor
-                                    </div>
-                                </th>
+                                @if (Auth::user()->rol->id_rol == 1)
+                                    <th scope="col" class="align-middle" width="300px">
+                                        <div class="th-content">
+                                            Tutor
+                                        </div>
+                                    </th>
+                                @endif
                                 <th scope="col" class="align-middle" width="100px">
                                     Seguimientos
                                 </th>
                                 <th scope="col" class="align-middle" width="100px">
                                     Constancia
                                 </th>
-                                <th scope="col" class="align-middle">
-                                    Acciones
-                                </th>
+                                @if (Auth::user()->rol->id_rol == 1)
+                                    <th scope="col" class="align-middle">
+                                        Acciones
+                                    </th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -105,7 +109,8 @@
                                     </td>
                                     <td class="text-center align-middle">
                                         @if ($est->enFichas)
-                                            <a href="#" class="btn btn-outline-success">
+                                            <a href="{{ route('fichaest', $est->dni) }}"
+                                                class="btn btn-outline-success">
                                                 <i class="far fa-eye"></i>
                                             </a>
                                         @else
@@ -114,54 +119,61 @@
                                             </button>
                                         @endif
                                     </td>
-                                    <td class="text-center align-middle">
-                                        <select class="form-control"
-                                            wire:change="$emit('cambioTutor', {{ $est->id }}, $event.target.value)">
-                                            <option value="0" {{ $est->tutor_id == null ? 'selected' : '' }}>
-                                                (Sin tutor)
-                                            </option>
-                                            @foreach ($tutores as $tutor)
-                                                <option value="{{ $tutor->id }}"
-                                                    {{ $est->tutor_id == $tutor->id ? 'selected' : '' }}>
-                                                    {{ $tutor->apell }}
-                                                    {{ $tutor->name }}
+                                    @if (Auth::user()->rol->id_rol == 1)
+                                        <td class="text-center align-middle">
+                                            <select class="form-control"
+                                                wire:change="$emit('cambioTutor', {{ $est->id }}, $event.target.value)">
+                                                <option value="0" {{ $est->tutor_id == null ? 'selected' : '' }}>
+                                                    (Sin tutor)
                                                 </option>
-                                            @endforeach
-                                        </select>
-                                    </td>
+                                                @foreach ($tutores as $tutor)
+                                                    <option value="{{ $tutor->id }}"
+                                                        {{ $est->tutor_id == $tutor->id ? 'selected' : '' }}>
+                                                        {{ $tutor->apell }}
+                                                        {{ $tutor->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                    @endif
+
                                     <td class="text-center align-middle">
                                         <a href="{{ route('seguimientos', $est->dni) }}" class="btn btn-outline-info">
                                             <strong>{{ $est->seguimientos->count() }}</strong>
                                         </a>
                                     </td>
                                     <td class="text-center align-middle">
-                                        <a href="#" class="btn btn-warning">
+                                        <a href="{{ route('constancia', $est->dni) }}" class="btn btn-warning"
+                                            target="_blank">
                                             <i class="fas fa-file-signature"></i>
                                         </a>
                                     </td>
-                                    <td class="text-center" style="vertical-align: middle;">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-warning" data-toggle="modal"
-                                                data-target="#esteditar{{ $est->id }}">
-                                                <i class="fas fa-user-edit"></i>
-                                            </button>
-                                            @if ($est->estado == 0)
+                                    @if (Auth::user()->rol->id_rol == 1)
+                                        <td class="text-center" style="vertical-align: middle;">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-warning" data-toggle="modal"
+                                                    data-target="#esteditar{{ $est->id }}">
+                                                    <i class="fas fa-user-edit"></i>
+                                                </button>
+                                                @if ($est->estado == 0)
+                                                    <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                        data-target="#estestado{{ $est->id }}">
+                                                        <i class="fas fa-lock"></i>
+                                                    </button>
+                                                @elseif ($est->estado == 1)
+                                                    <button type="button" class="btn btn-success"
+                                                        data-toggle="modal"
+                                                        data-target="#estestado{{ $est->id }}">
+                                                        <i class="fas fa-check-circle"></i>
+                                                    </button>
+                                                @endif
                                                 <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                    data-target="#estestado{{ $est->id }}">
-                                                    <i class="fas fa-lock"></i>
+                                                    data-target="#esteliminar{{ $est->id }}">
+                                                    <i class="fas fa-trash-alt"></i>
                                                 </button>
-                                            @elseif ($est->estado == 1)
-                                                <button type="button" class="btn btn-success" data-toggle="modal"
-                                                    data-target="#estestado{{ $est->id }}">
-                                                    <i class="fas fa-check-circle"></i>
-                                                </button>
-                                            @endif
-                                            <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                data-target="#esteliminar{{ $est->id }}">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </div>
-                                    </td>
+                                            </div>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>
@@ -184,7 +196,14 @@
                     </li>
                 @endif
 
-                @for ($i = 1; $i <= $estudiantes->lastPage(); $i++)
+                @php
+                    $showPages = 6; // Número de páginas a mostrar
+                    $half = floor($showPages / 2);
+                    $start = max(1, $estudiantes->currentPage() - $half);
+                    $end = min($start + $showPages - 1, $estudiantes->lastPage());
+                @endphp
+
+                @for ($i = $start; $i <= $end; $i++)
                     <li class="page-item {{ $estudiantes->currentPage() == $i ? 'active' : '' }}">
                         <a class="page-link" href="#"
                             wire:click="gotoPage({{ $i }})">{{ $i }}</a>

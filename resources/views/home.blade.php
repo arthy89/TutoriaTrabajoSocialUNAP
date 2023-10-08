@@ -32,4 +32,16 @@
             });
         </script>
     @endif
+
+    @if (session('sinTutor'))
+        <script>
+            Lobibox.notify('warning', {
+                width: 400,
+                img: "{{ asset('imgs/warning.png') }}",
+                position: 'top right',
+                title: "Sin Tutor",
+                msg: '{{ session('sinTutor') }}'
+            });
+        </script>
+    @endif
 @endpush
