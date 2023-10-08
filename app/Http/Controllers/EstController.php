@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ficha;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class EstController extends Controller
@@ -10,6 +11,19 @@ class EstController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function tutorasignado()
+    {
+        $tutor = User::find(auth()->user()->tutor_id);
+
+        if (is_null($tutor)) {
+            return redirect()->route('home')->with('sinTutor', 'Aún no tienes un tutor asignado');
+        }
+
+        return view('Est.tutorasignado', [
+            'tutor' => $tutor
+        ]);
     }
 
     public function fichapersonal()

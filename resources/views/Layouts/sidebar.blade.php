@@ -41,7 +41,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="info">
-                            <a href="{{ route('perfil') }}" class="d-block">
+                            <a href="{{ route('perfil') }}" class="d-block active">
                                 <p class="mb-0 text-bold">{{ Auth::user()->rol->rol_name }}</p>
                                 <p class="mb-0 small">
                                     {{ Auth::user()->apell_p }} {{ Auth::user()->apell }}
@@ -88,98 +88,103 @@
                         </li>
                     </ul>
                 </li> --}}
-                {{-- ? ADMINISTRADOR --}}
-                <li class="nav-header">ADMINISTRADOR</li>
-                <li class="nav-item">
-                    <a href="{{ route('tutores') }}" class="nav-link">
-                        <i class="nav-icon fas fa-user-tie"></i>
-                        <p>
-                            Tutores
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('estudiantes') }}" class="nav-link">
-                        <i class="nav-icon fas fa-users-cog"></i>
-                        <p>
-                            Estudiantes
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
-                        <p>
-                            Escuestas
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-chart-pie"></i>
-                        <p>
-                            Estadísticas
-                        </p>
-                    </a>
-                </li>
-
-                {{-- ? TUTOR --}}
-                <li class="nav-header">TUTOR</li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>
-                            Tutorados
-                        </p>
-                    </a>
-                </li>
-
-                {{-- ? ESTUDIANTE --}}
-                <li class="nav-header">ESTUDIANTE</li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-user-tie"></i>
-                        <p>
-                            Tutor
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('fichapersonal') }}" class="nav-link">
-                        <i class="nav-icon far fa-id-card"></i>
-                        <p>
-                            Ficha Personal
-                            <span class="right badge badge-danger">!</span>
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
-                        <p>
-                            Escuestas
-                            <span class="right badge badge-danger">!</span>
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-list-ul"></i>
-                        <p>
-                            Seguimientos
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-file-invoice"></i>
-                        <p>
-                            Generar constancia
-                        </p>
-                    </a>
-                </li>
-
-
+                @if (Auth::user()->rol->id_rol == 1)
+                    {{-- ? ADMINISTRADOR --}}
+                    <li class="nav-header">ADMINISTRADOR</li>
+                    <li class="nav-item">
+                        <a href="{{ route('tutores') }}"
+                            class="nav-link {{ Str::startsWith(request()->url(), route('tutores')) ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-user-tie"></i>
+                            <p>
+                                Tutores
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('estudiantes') }}"
+                            class="nav-link {{ Str::startsWith(request()->url(), route('estudiantes')) ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-users-cog"></i>
+                            <p>
+                                Estudiantes
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Escuestas
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <p>
+                                Estadísticas
+                            </p>
+                        </a>
+                    </li>
+                @elseif (Auth::user()->rol->id_rol == 2)
+                    {{-- ? TUTOR --}}
+                    <li class="nav-header">TUTOR</li>
+                    <li class="nav-item">
+                        <a href="{{ route('estudiantes_asignados') }}"
+                            class="nav-link {{ Str::startsWith(request()->url(), route('estudiantes_asignados')) ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>
+                                Tutorados
+                            </p>
+                        </a>
+                    </li>
+                @elseif (Auth::user()->rol->id_rol == 3)
+                    {{-- ? ESTUDIANTE --}}
+                    <li class="nav-header">ESTUDIANTE</li>
+                    <li class="nav-item">
+                        <a href="{{ route('tutorasignado') }}"
+                            class="nav-link {{ Str::startsWith(request()->url(), route('tutorasignado')) ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-user-tie"></i>
+                            <p>
+                                Tutor
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('fichapersonal') }}"
+                            class="nav-link {{ Str::startsWith(request()->url(), route('fichapersonal')) ? 'active' : '' }}">
+                            <i class="nav-icon far fa-id-card"></i>
+                            <p>
+                                Ficha Personal
+                                <span class="right badge badge-danger">!</span>
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Escuestas
+                                <span class="right badge badge-danger">!</span>
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-list-ul"></i>
+                            <p>
+                                Seguimientos
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-file-invoice"></i>
+                            <p>
+                                Generar constancia
+                            </p>
+                        </a>
+                    </li>
+                @endif
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

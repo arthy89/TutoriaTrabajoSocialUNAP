@@ -34,11 +34,11 @@ class Tutoreliminar extends Component
             }
         }
 
-        User::destroy($this->tutor->id);
         if ($this->tutor->foto) {
             Storage::disk('public')->delete($this->tutor->foto);
         }
 
+        User::destroy($this->tutor->id);
 
         session()->flash('cerrarModal');
         $this->emit('tutorEliminado');

@@ -1,9 +1,18 @@
 <div>
     <div class="row">
-        <div class="col-12 mb-3">
+        <div class="col-12 col-md-6 mb-3">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#seguimientoCrear">
                 <i class="fas fa-plus-circle"></i> Nuevo seguimiento
             </button>
+        </div>
+        <div class="col-12 col-md-6 mb-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                </div>
+                <input wire:model="buscar" type="text" class="form-control"
+                    placeholder="Buscar por título o fecha (día | mes | años)...">
+            </div>
         </div>
     </div>
 
@@ -70,6 +79,7 @@
     <div class="row mb-4">
         <div class="col-12 d-flex justify-content-center">
             <ul class="pagination mb-0 flex-wrap">
+
                 @if ($seguimientos->onFirstPage())
                     <li class="page-item disabled">
                         <span class="page-link"><i class="fas fa-chevron-left"></i></span>
@@ -82,7 +92,14 @@
                     </li>
                 @endif
 
-                @for ($i = 1; $i <= $seguimientos->lastPage(); $i++)
+                @php
+                    $showPages = 6; // Número de páginas a mostrar
+                    $half = floor($showPages / 2);
+                    $start = max(1, $seguimientos->currentPage() - $half);
+                    $end = min($start + $showPages - 1, $seguimientos->lastPage());
+                @endphp
+
+                @for ($i = $start; $i <= $end; $i++)
                     <li class="page-item {{ $seguimientos->currentPage() == $i ? 'active' : '' }}">
                         <a class="page-link" href="#"
                             wire:click="gotoPage({{ $i }})">{{ $i }}</a>
@@ -103,7 +120,4 @@
             </ul>
         </div>
     </div>
-
-    {{-- ? Modales Ver/Editar --}}
-
 </div>

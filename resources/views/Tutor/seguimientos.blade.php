@@ -51,7 +51,7 @@
                     img: "{{ asset('imgs/success.png') }}",
                     position: 'top right',
                     title: "Seguimiento actualizado",
-                    msg: 'El seguimiento actualizado correctamente'
+                    msg: 'El seguimiento fue actualizado correctamente'
                 });
             });
         });
