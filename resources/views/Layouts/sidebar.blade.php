@@ -109,7 +109,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-copy"></i>
                             <p>
@@ -124,7 +124,7 @@
                                 Estadísticas
                             </p>
                         </a>
-                    </li>
+                    </li> --}}
                 @elseif (Auth::user()->rol->id_rol == 2)
                     {{-- ? TUTOR --}}
                     <li class="nav-header">TUTOR</li>
@@ -168,7 +168,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-list-ul"></i>
                             <p>
@@ -183,7 +183,7 @@
                                 Generar constancia
                             </p>
                         </a>
-                    </li>
+                    </li> --}}
                 @endif
             </ul>
         </nav>
