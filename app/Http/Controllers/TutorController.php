@@ -37,6 +37,7 @@ class TutorController extends Controller
     public function seguimientos($dni)
     {
         $est = User::where('dni', $dni)->first();
+        // return $est;
 
         // Filtros para no dejar pasar a tutores a cualquier seguimiento
         if (auth()->user()->rol->id_rol !== 1) {
