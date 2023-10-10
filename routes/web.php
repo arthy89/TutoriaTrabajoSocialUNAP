@@ -6,11 +6,16 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TutorController;
 use App\Http\Controllers\UserController;
 use App\Http\Livewire\Tutor\SeguimientosView;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
 })->name('home')->middleware('auth');
+
+Route::get('storage-link', function () {
+    Artisan::call('storage:link');
+});
 
 Route::view('login', 'Auth/login')->name('login')->middleware('guest');
 Route::post('login', [LoginController::class, 'login'])->name('login');
