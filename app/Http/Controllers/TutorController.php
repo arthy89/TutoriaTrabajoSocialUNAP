@@ -24,7 +24,7 @@ class TutorController extends Controller
 
         // Filtros para no dejar pasar a tutores a cualquier seguimiento
         if (auth()->user()->rol->id_rol !== 1) {
-            if ($est->tutor_id !== auth()->user()->id) {
+            if ((int)(int)$est->tutor_id !== auth()->user()->id) {
                 return redirect()->route('home');
             }
         }
@@ -40,7 +40,7 @@ class TutorController extends Controller
 
         // Filtros para no dejar pasar a tutores a cualquier seguimiento
         if (auth()->user()->rol->id_rol !== 1) {
-            if ($est->tutor_id !== auth()->user()->id) {
+            if ((int)$est->tutor_id !== auth()->user()->id) {
                 return redirect()->route('home');
             }
         }
@@ -55,7 +55,7 @@ class TutorController extends Controller
         $est = User::where('dni', $dni)->first();
 
         if (auth()->user()->rol->id_rol !== 1) {
-            if ($est->tutor_id !== auth()->user()->id) {
+            if ((int)$est->tutor_id !== auth()->user()->id) {
                 return redirect()->route('home');
             }
         }
