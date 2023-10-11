@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreign('tutor_id')->references('id')->on('users');
             $table->string('email')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('reset_password_token')->nullable();
             $table->tinyText('sexo')->nullable();
             $table->string('celular', 9)->nullable();
             $table->longText('foto')->nullable();
