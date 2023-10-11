@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EstController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RecovercontraController;
 use App\Http\Controllers\TutorController;
 use App\Http\Controllers\UserController;
 use App\Http\Livewire\Tutor\SeguimientosView;
@@ -17,9 +18,16 @@ Route::get('storage-link', function () {
     Artisan::call('storage:link');
 });
 
+// LOGIN / LOGOUT
 Route::view('login', 'Auth/login')->name('login')->middleware('guest');
 Route::post('login', [LoginController::class, 'login'])->name('login');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+// RECOVER CONTRA
+Route::get('olvide-mi-contrasena', [RecovercontraController::class, 'formulario'])->name('form-olvide');
+Route::post('enviarcorreo', [RecovercontraController::class, 'enviarcorreo'])->name('enviarcorreo');
+Route::get('reestablecercontra/{token}', [RecovercontraController::class, 'formress'])->name('formress');
+Route::post('reestablecido', [RecovercontraController::class, 'reset'])->name('resetcontra');
 
 // VISTAS PERSONALES DE EDICION DEL PERFIL *completed*
 Route::get('perfil', [UserController::class, 'perfil'])->name('perfil');

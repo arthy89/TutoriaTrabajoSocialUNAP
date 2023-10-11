@@ -25,6 +25,7 @@ class User extends Authenticatable
         'id_rol',
         'tutor_id',
         'email',
+        'reset_password_token',
         'sexo',
         'celular',
         'foto',

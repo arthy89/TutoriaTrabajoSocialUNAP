@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login | Tutoría Trabajo Social</title>
+    <title>Recuperar Contraseña | Tutoría Trabajo Social</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -28,18 +28,25 @@
 
 <body class="hold-transition login-page">
     <div class="login-box">
-        <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
                 <a href="#" class="h1"><b><i class="fas fa-users"></i> Tutoría</b> Trabajo Social</a>
             </div>
             <div class="card-body">
+                <p class="login-box-msg">
+                    Ingrese el <b>correo</b> que registró en su perfil, ahí es donde se enviará el correo con las
+                    instrucciones
+                    de recuperación de su contraseña.
+                </p>
 
-                <form action="{{ route('login') }}" method="POST">
+                <form action="{{ route('enviarcorreo') }}" method="POST">
+
                     @csrf
+
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Código de estudiante/DNI" name="dni"
-                            onkeypress="validate(event)" required inputmode="numeric" maxlength="8">
+                        <input type="text" name="dni" class="form-control" placeholder="Código de estudiante/DNI"
+                            value="{{ old('dni') }}" onkeypress="validate(event)" required inputmode="numeric"
+                            maxlength="8">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-id-card"></span>
@@ -47,42 +54,31 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" id="contra" required class="form-control" placeholder="Contraseña"
-                            name="password">
+                        <input type="email" name="email" required class="form-control" placeholder="Correo"
+                            value="{{ old('email') }}">
                         <div class="input-group-append">
-                            <div class="input-group-text" style="background-color: white;">
-                                <span class="fas fa-eye" id="ojo"></span>
-                            </div>
                             <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
+                                <span class="fas fa-envelope"></span>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 col-md-6">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="remember" name="remember">
-                                <label for="remember">
-                                    Recuérdame
-                                </label>
-                            </div>
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-12 col-md-6">
-                            <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-block">Enviar el correo</button>
                         </div>
                         <!-- /.col -->
                     </div>
                 </form>
+
             </div>
+
             <div class="card-footer text-center">
                 {{-- <p class="mb-0 mt-1 text-secondary text-sm"> --}}
-                <a href="{{ route('form-olvide') }}">¿Olvidaste tu contraseña?</a>
+                <a href="{{ route('login') }}">Iniciar Sesión</a>
                 {{-- </p> --}}
             </div>
-            <!-- /.card-body -->
+            <!-- /.login-card-body -->
         </div>
-        <!-- /.card -->
     </div>
     <!-- /.login-box -->
 
@@ -95,23 +91,6 @@
     <!-- Notificaciones Lobibox -->
     <script src="{{ asset('assets/notify/js/Lobibox.js') }}"></script>
     <script src="{{ asset('assets/notify/js/notification-active.js') }}"></script>
-
-    <script>
-        var ojo_ico = document.getElementById('ojo');
-        var input = document.getElementById('contra');
-
-        ojo_ico.addEventListener("click", function() {
-            if (input.type == "password") {
-                input.type = "text";
-                ojo_ico.classList.remove("fa-eye");
-                ojo_ico.classList.add("fa-eye-slash");
-            } else {
-                input.type = "password";
-                ojo_ico.classList.remove("fa-eye-slash");
-                ojo_ico.classList.add("fa-eye");
-            }
-        })
-    </script>
 
     <script>
         function validate(evt) {
@@ -133,53 +112,41 @@
         }
     </script>
 
-    @if (session('status'))
-        <script>
-            Lobibox.notify('success', {
-                width: 400,
-                img: "{{ asset('imgs/success.png') }}",
-                position: 'top right',
-                title: "Cierre de sesión correcto",
-                msg: '{{ session('status') }} Vuelva pronto'
-            });
-        </script>
-    @endif
-
-    @if (session('deshabilitado'))
+    @error('dni')
         <script>
             Lobibox.notify('error', {
                 width: 400,
                 img: "{{ asset('imgs/error.png') }}",
                 position: 'top right',
-                title: "¡Error de sesión!",
-                msg: '{{ session('deshabilitado') }}'
+                title: "Ingrese su Código o DNI",
+                msg: 'El campo DNI es obligatorio'
             });
         </script>
-    @endif
+    @enderror
 
-    @if ($errors->has('dni'))
+    @error('email')
         <script>
             Lobibox.notify('error', {
                 width: 400,
                 img: "{{ asset('imgs/error.png') }}",
                 position: 'top right',
-                title: "Error de sesión",
-                msg: '¡Error de inicio de sesión, credenciales incorrectas!'
+                title: "Ingrese su Correo",
+                msg: 'El correo es necesario'
             });
         </script>
-    @endif
+    @enderror
 
-    @if (session('contraAct'))
+    @error('dni_email')
         <script>
-            Lobibox.notify('success', {
+            Lobibox.notify('error', {
                 width: 400,
-                img: "{{ asset('imgs/success.png') }}",
+                img: "{{ asset('imgs/error.png') }}",
                 position: 'top right',
-                title: "Contraseña Reestablecida",
-                msg: '{{ session('contraAct') }}'
+                title: "Error de Código/DNI y Correo",
+                msg: 'Es posible que el Código/DNI no esté registrado o el correo no le corresponda'
             });
         </script>
-    @endif
+    @enderror
 </body>
 
 </html>
