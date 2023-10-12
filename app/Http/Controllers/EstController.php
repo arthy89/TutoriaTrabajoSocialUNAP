@@ -32,8 +32,17 @@ class EstController extends Controller
 
         // buscamos la ficha correspondiente al usuario autenticado
         $ficha_act = Ficha::where('fichas.user', '=', $user->id)->get()->first();
-        // return $ficha_act->familia;
+        // return $ficha_act;
         return view('Est.fichapersonal', compact('ficha_act'));
+    }
+
+    public function fichapersonal_print()
+    {
+        $est = auth()->user();
+
+        return view('Est.fichaprint', [
+            'est' => $est,
+        ]);
     }
 
     public function fichact(Request $request)
