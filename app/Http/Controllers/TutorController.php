@@ -24,16 +24,33 @@ class TutorController extends Controller
 
         // Filtros para no dejar pasar a tutores a cualquier seguimiento
         if (auth()->user()->rol->id_rol !== 1) {
-            if ((int)(int)$est->tutor_id !== auth()->user()->id) {
+            if ((int)$est->tutor_id !== auth()->user()->id) {
                 return redirect()->route('home');
             }
         }
 
-        // ficha unica
-        // $est->ficha->first()
-
-        return $est->ficha->first();
+        // return $est->ficha->first()->familia;
+        return view('Est.fichaview', [
+            'est' => $est
+        ]);
     }
+
+    public function fichaestprint($dni)
+    {
+        $est = User::where('dni', $dni)->first();
+
+        // Filtros para no dejar pasar a tutores a cualquier seguimiento
+        if (auth()->user()->rol->id_rol !== 1) {
+            if ((int)$est->tutor_id !== auth()->user()->id) {
+                return redirect()->route('home');
+            }
+        }
+
+        return view('Est.fichaprint', [
+            'est' => $est,
+        ]);
+    }
+
     public function seguimientos($dni)
     {
         $est = User::where('dni', $dni)->first();

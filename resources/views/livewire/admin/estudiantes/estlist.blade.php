@@ -99,22 +99,26 @@
                                     </td>
                                     <td class="text-center align-middle">
                                         @if ($est->sexo == 'masculino')
-                                            <h4><span class="badge bg-primary">M</span></h4>
+                                            <h4><span class="badge bg-primary" data-toggle="tooltip"
+                                                    data-placement="top" title="Masculino">M</span></h4>
                                         @elseif ($est->sexo == 'femenino')
-                                            <h4><span class="badge bg-danger">F</span></h4>
+                                            <h4><span class="badge bg-maroon" data-toggle="tooltip" data-placement="top"
+                                                    title="Femenino">F</span></h4>
                                         @else
-                                            <h4><span class="badge bg-secondary">N</span></h4>
+                                            <h4><span class="badge bg-secondary" data-toggle="tooltip"
+                                                    data-placement="top" title="No llenó">N</span></h4>
                                         @endif
 
                                     </td>
                                     <td class="text-center align-middle">
                                         @if ($est->enFichas)
-                                            <a href="{{ route('fichaest', $est->dni) }}"
-                                                class="btn btn-outline-success">
+                                            <a href="{{ route('fichaest', $est->dni) }}" class="btn btn-outline-success"
+                                                data-toggle="tooltip" data-placement="top" title="Ver ficha">
                                                 <i class="far fa-eye"></i>
                                             </a>
                                         @else
-                                            <button class="btn btn-outline-danger">
+                                            <button class="btn btn-outline-danger" data-toggle="tooltip"
+                                                data-placement="top" title="No hay ficha">
                                                 <i class="fas fa-minus-circle"></i>
                                             </button>
                                         @endif
@@ -138,13 +142,15 @@
                                     @endif
 
                                     <td class="text-center align-middle">
-                                        <a href="{{ route('seguimientos', $est->dni) }}" class="btn btn-outline-info">
+                                        <a href="{{ route('seguimientos', $est->dni) }}" class="btn btn-outline-info"
+                                            data-toggle="tooltip" data-placement="top" title="Ver seguimientos">
                                             <strong>{{ $est->seguimientos->count() }}</strong>
                                         </a>
                                     </td>
                                     <td class="text-center align-middle">
                                         <a href="{{ route('constancia', $est->dni) }}" class="btn btn-warning"
-                                            target="_blank">
+                                            target="_blank" data-toggle="tooltip" data-placement="top"
+                                            title="Generar constancia">
                                             <i class="fas fa-file-signature"></i>
                                         </a>
                                     </td>
@@ -153,23 +159,27 @@
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-warning" data-toggle="modal"
                                                     data-target="#esteditar{{ $est->id }}">
-                                                    <i class="fas fa-user-edit"></i>
+                                                    <i class="fas fa-user-edit" data-toggle="tooltip"
+                                                        data-placement="top" title="Editar"></i>
                                                 </button>
                                                 @if ($est->estado == 0)
                                                     <button type="button" class="btn btn-danger" data-toggle="modal"
                                                         data-target="#estestado{{ $est->id }}">
-                                                        <i class="fas fa-lock"></i>
+                                                        <i class="fas fa-lock" data-toggle="tooltip"
+                                                            data-placement="top" title="Cambiar estado"></i>
                                                     </button>
                                                 @elseif ($est->estado == 1)
                                                     <button type="button" class="btn btn-success"
                                                         data-toggle="modal"
                                                         data-target="#estestado{{ $est->id }}">
-                                                        <i class="fas fa-check-circle"></i>
+                                                        <i class="fas fa-check-circle" data-toggle="tooltip"
+                                                            data-placement="top" title="Cambiar estado"></i>
                                                     </button>
                                                 @endif
                                                 <button type="button" class="btn btn-danger" data-toggle="modal"
                                                     data-target="#esteliminar{{ $est->id }}">
-                                                    <i class="fas fa-trash-alt"></i>
+                                                    <i class="fas fa-trash-alt" data-toggle="tooltip"
+                                                        data-placement="top" title="Eliminar"></i>
                                                 </button>
                                             </div>
                                         </td>

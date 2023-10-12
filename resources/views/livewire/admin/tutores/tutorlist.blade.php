@@ -78,7 +78,8 @@
                                         {{ $tutor->apell }} {{ $tutor->name }}
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <a href="{{ route('tutor', $tutor->dni) }}" class="btn btn-outline-info">
+                                        <a href="{{ route('tutor', $tutor->dni) }}" class="btn btn-outline-info"
+                                            data-toggle="tooltip" data-placement="top" title="Conteo de tutorados">
                                             <strong>{{ $tutor->tutoradosAsignados }}</strong>
                                         </a>
                                     </td>
@@ -86,22 +87,26 @@
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-warning" data-toggle="modal"
                                                 data-target="#tutoreditar{{ $tutor->id }}">
-                                                <i class="fas fa-user-edit"></i>
+                                                <i class="fas fa-user-edit" data-toggle="tooltip" data-placement="top"
+                                                    title="Editar"></i>
                                             </button>
                                             @if ($tutor->estado == 0)
                                                 <button type="button" class="btn btn-danger" data-toggle="modal"
                                                     data-target="#tutorestado{{ $tutor->id }}">
-                                                    <i class="fas fa-lock"></i>
+                                                    <i class="fas fa-lock" data-toggle="tooltip" data-placement="top"
+                                                        title="Cambiar estado"></i>
                                                 </button>
                                             @elseif ($tutor->estado == 1)
                                                 <button type="button" class="btn btn-success" data-toggle="modal"
                                                     data-target="#tutorestado{{ $tutor->id }}">
-                                                    <i class="fas fa-check-circle"></i>
+                                                    <i class="fas fa-check-circle" data-toggle="tooltip"
+                                                        data-placement="top" title="Cambiar estado"></i>
                                                 </button>
                                             @endif
                                             <button type="button" class="btn btn-danger" data-toggle="modal"
                                                 data-target="#tutorliminar{{ $tutor->id }}">
-                                                <i class="fas fa-trash-alt"></i>
+                                                <i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="top"
+                                                    title="Eliminar"></i>
                                             </button>
                                         </div>
                                     </td>
