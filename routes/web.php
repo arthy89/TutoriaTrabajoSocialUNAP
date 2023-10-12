@@ -51,11 +51,13 @@ Route::group(['middleware' => ['auth', 'checkRole:1,2']], function () {
     Route::get('estudiantes/seguimientos/{dni}', [TutorController::class, 'seguimientos'])->name('seguimientos');
     Route::get('estudiantes/constancia/{dni}', [TutorController::class, 'constancia'])->name('constancia');
     Route::get('estudiantes/ficha/{dni}', [TutorController::class, 'fichaest'])->name('fichaest');
+    Route::get('estudiantes/ficha/{dni}/print', [TutorController::class, 'fichaestprint'])->name('fichaestprint');
 });
 
 // VISTAR ESTUDIANTE
 Route::group(['middleware' => ['auth', 'checkRole:3']], function () {
     Route::get('fichapersonal', [EstController::class, 'fichapersonal'])->name('fichapersonal');
     Route::put('fichact', [EstController::class, 'fichact'])->name('fichact');
+    Route::get('fichapersonal/print', [EstController::class, 'fichapersonal_print'])->name('fichapersonal_print');
     Route::get('tutor_asignado', [EstController::class, 'tutorasignado'])->name('tutorasignado');
 });
